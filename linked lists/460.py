@@ -1,8 +1,8 @@
 class DLinkedNode:
-    def __init__(self):
-        self.key = 0
-        self.value = 0
-        self.freq = 0
+    def __init__(self, key=None, value=None):
+        self.key = key
+        self.value = key
+        self.freq = 1
         self.prev = None
         self.next = None
         
@@ -34,7 +34,7 @@ class DLinkedList:
 
         node = self.tail.prev
         self._remove_node(node)
-        self.size -= 1
+        
         return node
         
 
@@ -50,8 +50,10 @@ class LFUCache:
     def freq_update(self, node):
         nodelist = self.freqmap[node.freq]
         nodelist._remove_node(node)
+        
         if nodelist.size == 0 and self.minfreq == node.freq:
             self.minfreq += 1
+            
 
         node.freq += 1
         new_nodelist = self.freqmap[node.freq]
@@ -74,14 +76,17 @@ class LFUCache:
             node.value = value
         else:
             if self.size == self.capacity:
+                
                 node = self.freqmap[self.minfreq]._pop_tail()
+                
                 del self.nodemap[node.key]
                 self.size -= 1
             node = DLinkedNode()
             node.key = key
             node.value = value
-            node.freq = 1
+            
             self.nodemap[key] = node
             self.freqmap[node.freq]._add_node(node)
             self.minfreq = 1
+            
             self.size += 1
