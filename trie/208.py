@@ -19,7 +19,7 @@ class Trie:
             current = current.children.get(letter)
             if current is None:
                 return False
-        return current.is_word
+        return current.is_wor
 
     def starts_with(self, prefix):
         current = self.root
