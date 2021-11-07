@@ -13,3 +13,20 @@ class Solution:
         self.dfs(nums, subset, res, i + 1)
         subset.pop()
         self.dfs(nums, subset, res, i + 1)
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        
+        def dfs(path, i):
+            if i >= len(nums):
+                res.append(path.copy())
+                return
+            # path.append(nums[i])
+            dfs(path, i + 1)
+            path.append(nums[i])
+            dfs(path, i + 1)
+            path.pop()
+                    
+        dfs([], 0)
+        return res
