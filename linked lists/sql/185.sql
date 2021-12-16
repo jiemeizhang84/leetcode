@@ -7,3 +7,16 @@ WHERE 3 > (
     WHERE e1.Salary > e.Salary
     AND e1.DepartmentId = e.DepartmentId
 )
+
+--solution2
+select d.name department, e.name employee, e.salary
+from
+(select departmentId,
+       salary,
+       name,
+       dense_rank() over(partition by departmentId order by salary desc) as rk
+from employee) e
+inner join department d
+on e.departmentId=d.id
+where rk<=3
+order by 1,3 desc
